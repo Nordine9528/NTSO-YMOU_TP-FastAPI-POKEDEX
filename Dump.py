@@ -1,11 +1,13 @@
 import requests
 import json
 
-url = "http://127.0.0.1:8000/pokemon/1"
+url = "http://127.0.0.1:8000/pokemons/25/scan"
 r = requests.get(url)
 print(r.status_code)
-req_json = r.json()
 
+
+
+''' 
 print(f"Numero : {req_json['id']}")
 print(f"Nom : {req_json['name']}")
 print(f"Type 1 : {req_json['types'][0]['type']['name']}")
@@ -20,7 +22,7 @@ else :
 
 print(f"Hauteur : {req_json['height']}")
 print(f"Poids : {req_json['weight']}")
-
+'''
 
 
 
