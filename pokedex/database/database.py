@@ -1,5 +1,7 @@
 import sqlite3
 
+from numpy import char
+
 from schemas import pokemon
 
 
@@ -32,11 +34,11 @@ def init_connection_db_show_tables():
     print([t[0] for t in tables])
     connection.close()
 
-def db_insert_pokemon(pokemon_json : pokemon ):
+def db_insert_pokemon(pokemon_json : pokemon, pokemon_name_fr : char):
     if (len(pokemon_json['types']) < 2):
         types = f"{pokemon_json['types'][0]['type']['name']}"
     else:
-        types = f"{pokemon_json['types'][0]['type']['name']} + {pokemon_json['types'][1]['type']['name']}"
+        types = f"{pokemon_json['types'][0]['type']['name']}; {pokemon_json['types'][1]['type']['name']}"
 
     print("je suis ici apres la detection du type\n")
     Poid_pokemon = pokemon_json["weight"] / 10
@@ -48,12 +50,12 @@ def db_insert_pokemon(pokemon_json : pokemon ):
     cursor = connection.cursor()
 
     cursor.execute(
-        "INSERT OR IGNORE INTO pokemon VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+        "INSERT OR REPLACE INTO pokemon VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
         (
             pokemon_json["id"],
-            pokemon_json["name"],
-            pokemon_json["name"],
-            types,
+            pokemon_json["name"].capitalize(),
+            pokemon_name_fr.capitalize(),
+            types.capitalize(),
             pokemon_json["sprites"]["front_default"],
             Taille_pokemon,
             Poid_pokemon,

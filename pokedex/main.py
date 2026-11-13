@@ -14,8 +14,10 @@ def GET_health():
 
 @app.get("/pokemons/{pokemon_id}/scan")
 def get_pokemon(pokemon_id: int):
-    f_pokapi.get_pokemon_from_api(pokemon_id)
-    print("bonjour")
+    r_json = f_pokapi.get_pokemon_from_api(pokemon_id)
+    name_fr = f_pokapi.get_pokemon_fr_name(pokemon_id)
+
+    database.db_insert_pokemon(r_json, name_fr)
 
 
 
